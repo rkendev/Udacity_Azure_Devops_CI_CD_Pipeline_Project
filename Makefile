@@ -1,11 +1,20 @@
+# Check if running in Azure Cloud Shell
+SHELL := /bin/bash
+ifneq ($(shell test -e /home/cloudshell-user && echo yes), yes)
+	PIP=pip
+	PYTHON=python
+else
+	PIP=~/.myrepo/bin/pip
+	PYTHON=~/.myrepo/bin/python
+endif
+
 install:
-    pip install --upgrade pip &&\
-        pip install -r requirements.txt
+	$(PIP) install --upgrade pip && $(PIP) install -r requirements.txt
 
 test:
-    python -m pytest -vv test_hello.py
+	$(PYTHON) -m pytest -vv test_hello.py
 
 lint:
-    pylint --disable=R,C hello.py
+	$(PYTHON) -m pylint --disable=R,C hello.py
 
 all: install lint test
