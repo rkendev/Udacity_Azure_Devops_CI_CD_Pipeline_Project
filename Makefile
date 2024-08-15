@@ -18,6 +18,7 @@ install:
 
 test:
 	$(PYTHON) -m pytest -vv --cov=myrepolib tests/*.py
+	coverage report -m
 	$(PYTHON) -m pytest --nbval notebook.ipynb
 
 lint:
